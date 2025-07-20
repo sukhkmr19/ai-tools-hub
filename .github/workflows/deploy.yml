@@ -17,6 +17,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.32.4' # Match your Flutter version
+          channel: stable
 
       - name: 📦 Install dependencies
         run: flutter pub get
