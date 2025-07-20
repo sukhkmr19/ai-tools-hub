@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 void main() {
   if (kIsWeb) {
@@ -71,7 +70,7 @@ class _ToolsPageState extends State<ToolsPage> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   final Map<String, int> _ratings = {};
-  bool _isGridView = false; // Toggle for list/grid view
+  final bool _isGridView = false; // Toggle for list/grid view
 
   void _sortTools(List<Tool> tools) {
     switch (_selectedSortOption) {
@@ -700,8 +699,6 @@ class _ToolsPageState extends State<ToolsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          /// 🔽 Sort Dropdown
-
                           /// 🧠 Header Description
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -713,7 +710,9 @@ class _ToolsPageState extends State<ToolsPage> {
                                 Flexible(
                                   child: Text(
                                     'Explore a variety of AI tools to enhance your productivity and creativity.',
-                                    style: Theme.of(context).textTheme.titleLarge,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleLarge,
                                     textAlign: TextAlign.justify,
                                   ),
                                 ),
@@ -847,6 +846,82 @@ class _ToolsPageState extends State<ToolsPage> {
 }
 
 class Footer extends StatelessWidget {
+  final String _privacyText = '''
+  📄 Privacy Policy — AI Tools Hub
+
+Effective Date: July 20, 2025
+
+1. Introduction
+
+AI Tools Hub (“we,” “our,” or “us”) respects your privacy. This Privacy Policy explains how we handle data when you use our website.
+
+2. Data We Collect
+
+We do not collect any personally identifiable information (PII) from users. The site may store your tool ratings locally in your browser via localStorage for a better experience.
+
+3. Usage Data
+
+We may use anonymous analytics (if configured) to understand general traffic patterns. No user-specific or device-identifiable data is collected.
+
+4. Third-Party Links
+
+Our site links to third-party AI tools. We are not responsible for the privacy practices or content of those external websites.
+
+5. Cookies and Tracking
+
+We do not use cookies or session tracking services.
+
+6. Children’s Privacy
+
+Our site is not intended for users under the age of 13. We do not knowingly collect data from children.
+
+7. Changes to This Policy
+
+We may update this policy from time to time. Updates will be posted with the “Effective Date” above.
+
+8. Contact
+
+For questions or concerns, email us at: sukhbeer@sukhbeer.com''';
+
+  final String _termsText = '''
+  📜 Terms of Use — AI Tools Hub
+
+Effective Date: July 20, 2025
+
+1. Acceptance of Terms
+
+By using this website, you agree to these Terms of Use. If you disagree with any part, please discontinue use.
+
+2. Use of the Website
+
+You may browse, search, and interact with tools listed on the site for personal or research purposes. Commercial usage of the platform or content scraping is strictly prohibited.
+
+3. Intellectual Property
+
+All site content (excluding third-party tool logos, names, and descriptions) is the property of AI Tools Hub and may not be repurposed without permission.
+
+4. Third-Party Tools
+
+We do not own, control, or take responsibility for the tools listed. All trademarks, tool names, and links belong to their respective owners.
+
+5. Availability
+
+The website is offered “as-is” and “as available,” with no guarantees of uptime or uninterrupted access.
+
+6. Limitation of Liability
+
+We shall not be liable for any direct or indirect damages resulting from use of third-party tools listed on this site.
+
+7. Changes to Terms
+
+We reserve the right to modify these terms. Continued use of the site constitutes acceptance of the latest version.
+
+8. Governing Law
+
+These terms are governed by the laws of your local jurisdiction unless otherwise stated.''';
+
+  const Footer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -855,7 +930,7 @@ class Footer extends StatelessWidget {
       child: Column(
         children: [
           Text(
-      '© 2025 Sukhbeer Kumar. Built with ❤️ using Flutter. All rights reserved.',
+            '© 2025 Sukhbeer Kumar. Built with ❤️ using Flutter. All rights reserved.',
             style: TextStyle(color: Colors.black54),
           ),
           const SizedBox(height: 8),
@@ -864,13 +939,14 @@ class Footer extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  // Add your privacy policy link here
+                  _showBottomSheet(context, 'Privacy Policy', _privacyText);
                 },
                 child: Text('Privacy Policy'),
               ),
+              Text(" * "),
               TextButton(
                 onPressed: () {
-                  // Add your terms of service link here
+                  _showBottomSheet(context, 'Terms of Use', _termsText);
                 },
                 child: Text('Terms of Service'),
               ),
@@ -881,27 +957,89 @@ class Footer extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                icon: Icon(Icons.facebook),
-                onPressed: () {
-                  // Add your Facebook link here
+              TextButton(
+                onPressed: () async {
+                  final url = Uri.parse("https://identiq.biz/sukhbeer");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  }
                 },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Find Me",style: TextStyle(decoration: TextDecoration.underline),),
+                ),
               ),
-              IconButton(
-                icon: Icon(Icons.transfer_within_a_station),
-                onPressed: () {
-                  // Add your Twitter link here
+              Text(" * "),
+              TextButton(
+                onPressed: () async {
+                  final url = Uri.parse(
+                    "https://www.linkedin.com/in/sukhkmr19",
+                  );
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  }
                 },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Linkedin",style: TextStyle(decoration: TextDecoration.underline),),
+                ),
               ),
-              IconButton(
-                icon: Icon(Icons.dataset_linked_outlined),
-                onPressed: () {
-                  // Add your LinkedIn link here
+              Text(" * "),
+              TextButton(
+                onPressed: () async {
+                  final url = Uri.parse("https://about.me/sukhbeer");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  }
                 },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("About Me",style: TextStyle(decoration: TextDecoration.underline),),
+                ),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context, String title, String content) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.7,
+        minChildSize: 0.4,
+        maxChildSize: 0.95,
+        builder: (_, controller) => Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: controller,
+                  child: SelectableText(
+                    content,
+                    style: const TextStyle(fontSize: 14, height: 1.4),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
