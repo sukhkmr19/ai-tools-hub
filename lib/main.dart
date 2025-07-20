@@ -131,7 +131,7 @@ class _ToolsPageState extends State<ToolsPage> {
       "Open-source design tool for creating user interfaces. It allows collaboration and prototyping in a web-based environment. Ideal for designers looking for a free alternative to proprietary software.",
       "https://penpot.app",
       "AI for UI/UX Design & Prototyping",
-      popularity: 150,
+      popularity: 140,
     ),
 
     Tool(
