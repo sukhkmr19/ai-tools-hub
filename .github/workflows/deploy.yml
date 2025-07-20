@@ -1,0 +1,31 @@
+name: 🚀 Deploy Flutter Web to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger deploy on main branch pushes
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 💙 Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.4' # Match your Flutter version
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🛠️ Build Web Release
+        run: flutter build web --release --base-href=/ai-tools-hub/
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/web
