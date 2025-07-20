@@ -855,7 +855,7 @@ class Footer extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            '© 2023 Your Company Name. All rights reserved.',
+      '© 2025 Sukhbeer Kumar. Built with ❤️ using Flutter. All rights reserved.',
             style: TextStyle(color: Colors.black54),
           ),
           const SizedBox(height: 8),
