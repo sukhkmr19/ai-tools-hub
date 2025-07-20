@@ -219,7 +219,7 @@ class _ToolsPageState extends State<ToolsPage> {
       "AI assistant developed by xAI (Elon Musk) for various applications. It aims to provide intelligent responses and assist users in their tasks. Great for those interested in innovative AI solutions.",
       "https://x.ai",
       "Powerful AI Assistants",
-      popularity: 170,
+      popularity: 160,
     ),
 
     Tool(
