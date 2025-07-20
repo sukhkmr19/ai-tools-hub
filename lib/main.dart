@@ -876,6 +876,7 @@ class Footer extends StatelessWidget {
               ),
             ],
           ),
+
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
