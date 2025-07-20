@@ -227,7 +227,7 @@ class _ToolsPageState extends State<ToolsPage> {
       "Private AI search assistant that prioritizes user privacy. It offers personalized search results and recommendations. Ideal for users looking for a secure search experience.",
       "https://you.com",
       "Powerful AI Assistants",
-      popularity: 120,
+      popularity: 130,
     ),
 
     Tool(
